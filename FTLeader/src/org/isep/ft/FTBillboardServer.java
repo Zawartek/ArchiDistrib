@@ -106,6 +106,7 @@ public class FTBillboardServer extends UnicastRemoteObject implements FTBillboar
     private void changeLeader(String master) {
         replicas.remove(master);
         String newLeader = replicas.firstKey();
+        System.out.println(replicas);
         synchronized (coordinatorLock) {
             coordinator = newLeader;
             if(coordinator.equals(serverName))
