@@ -7,46 +7,46 @@ import java.util.HashMap;
 public interface Document extends Remote {
 
 	/**
-	 * Retourne le nom du document
+	 * Return the document name
 	 * @return
 	 * @throws RemoteException
 	 */
 	String getName() throws RemoteException;
 
 	/**
-	 * Retourne l'ensemble des sections du document
+	 * Return all sections of the document
 	 * @return
 	 * @throws RemoteException
 	 */
 	HashMap<Integer, Section> getSections() throws RemoteException;
 
 	/**
-	 * Rtourne l'ensemble des verrous des sections du document
+	 * Return all locks of sections of the document
 	 * @return
 	 * @throws RemoteException
 	 */
 	HashMap<Integer, Boolean> getLocks() throws RemoteException;
 
 	/**
-	 * Modifie l'ensemble des verrous des sections du document
+	 * Modify all locks of sections of the document
 	 * @param locks
 	 * @throws RemoteException
 	 */
 	void setLocks(HashMap<Integer, Boolean> locks) throws RemoteException;
 	
 	/**
-	 * Retourne la section du document a partir de son ID
-	 * @param id
+	 * Return the section corresponding to the number given in parameter
+	 * @param number
 	 * @return
 	 * @throws RemoteException
 	 */
-	Section getSection(Integer id) throws RemoteException;
+	Section getSection(Integer number) throws RemoteException;
 	
 	/**
-	 * Modifie la section du document correspondant à l'ID
-	 * @param id
-	 * @param section
+	 * Replace the section of a document by a new section
+	 * @param number : number of a section
+	 * @param section : new section
 	 * @throws RemoteException
 	 */
-	void setSection(int id, Section section) throws RemoteException;
+	void setSection(int number, Section section) throws RemoteException;
 }

@@ -9,7 +9,6 @@ public interface FTDocument extends Remote,Document {
     String LOOKUP_NAME = "FTDocument";
 
     /**
-     *
      * Returns the name of the current leader for this instance
      * @return String containing address:port of the leader's registry
      * @throws RemoteException
@@ -25,26 +24,27 @@ public interface FTDocument extends Remote,Document {
 
     /**
      * Start the edition of a section
+     * @param number : number of the section
      * @param sec : the section
      * @return boolean : succeed or not (depends if the section is locked and if the last version is available)
      */
-    boolean startEdition(Integer id, Section sec);
+    boolean startEdition(int number, Section sec);
     
     /**
      * Update a section of a file with her latest version
-     * @param id : user id
-     * @param sec : the section of the file
+     * @param number : number of the section
+     * @param sec : the modified section
      * @return boolean : succeed or not (depends if the section is update and not locked)
      */
-    boolean commitSection(long id, Section sec);
+    boolean commitSection(int number, Section sec);
     
     /**
-     * Release the lock on a section
-     * @param id : user id
-     * @param sec : the section of the file
+     * Release the lock of a section
+     * @param number : number of the section
+     * @param sec : the section
      * @return boolean : succeed or not (depends if the section is not locked)
      */
-    boolean releaseLock(long id, Section sec);
+    boolean releaseLock(int number, Section sec);
 
     /**
      * Get the last version of the document
