@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FTDocument extends Remote,Document {
 
-    String LOOKUP_NAME = "FTBillboard";
+    String LOOKUP_NAME = "FTDocument";
 
     /**
      *

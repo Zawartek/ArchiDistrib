@@ -22,12 +22,7 @@ public class FTDocumentServer extends UnicastRemoteObject implements FTDocument 
     public static int THREAD_POOL_SIZE = 2;
     public static int PING_FREQ = 1000;
 
-
-
     private boolean stop =false;
-
-
-
 
     private final Object coordinatorLock = new Object();
     private String coordinator, serverName;
@@ -36,10 +31,7 @@ public class FTDocumentServer extends UnicastRemoteObject implements FTDocument 
     private final ConcurrentSkipListMap<String, FTDocument> replicas = new ConcurrentSkipListMap<>();
     private final ExecutorService pool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
-
     private final Document delegate = new DocumentServer();
-
-
 
     /**
      * Registration of neighbours from the leader
