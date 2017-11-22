@@ -1,6 +1,7 @@
 package src;
 
 import java.security.*;
+import java.util.Base64;
 
 public class MerkleTree {
 
@@ -9,6 +10,7 @@ public class MerkleTree {
 	private MerkleTree left;
 	private MerkleTree right;
 	private byte[] value;
+	private String encodedValue;
 	private int start;
 	private int end;
 
@@ -17,6 +19,7 @@ public class MerkleTree {
 		digest.update(LEAF);
 		digest.update(v);
 		value = digest.digest();
+		encodedValue = Base64.getEncoder().encodeToString(value);
 	}
 	
 	public MerkleTree(MerkleTree left, MerkleTree right) throws NoSuchAlgorithmException {
@@ -33,6 +36,7 @@ public class MerkleTree {
 			end = right.endIndex();
 		}
 		value = digest.digest();
+		encodedValue = Base64.getEncoder().encodeToString(value);
 	}
 	
 	public MerkleTree left() {
@@ -53,5 +57,13 @@ public class MerkleTree {
 	
 	public int endIndex() {
 		return end;
+	}
+
+	public String getEncodedValue() {
+		return encodedValue;
+	}
+
+	public void setEncodedValue(String encodedValue) {
+		this.encodedValue = encodedValue;
 	}
 }

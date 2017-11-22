@@ -9,11 +9,14 @@ public class Main {
 		try {
 			MerkleTree mt, mt2,mt3;
 			mt = new MerkleTree(b);
-			System.out.println(mt.getValue());
+			System.out.println("MT value : " + mt.getValue());
+			System.out.println("MT encoded value : " + mt.getEncodedValue());
 			mt2 = new MerkleTree(mt,null);
-			System.out.println(mt2.getValue());
-			mt3 = new MerkleTree(mt,null);
-			System.out.println(mt3.getValue());
+			System.out.println("MT2 value : " + mt2.getValue());
+			System.out.println("MT2 encoded value : " + mt2.getEncodedValue());
+			mt3 = new MerkleTree(null,mt);
+			System.out.println("MT3 value : " + mt3.getValue());
+			System.out.println("MT3 encoded value : " + mt3.getEncodedValue());
 			
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
