@@ -29,100 +29,99 @@ public class MerkleTree {
 		level = 0;
 		encodedValue = Base64.getEncoder().encodeToString(value);
 	}
-	
+
 	public MerkleTree(MerkleTree left, MerkleTree right) throws NoSuchAlgorithmException {
 		addNodes(left, right);
 	}
-	private void addNodes(MerkleTree left, MerkleTree right) throws NoSuchAlgorithmException {
+
+	public void addNodes(MerkleTree left, MerkleTree right) throws NoSuchAlgorithmException {
 		MessageDigest digest = MessageDigest.getInstance("SHA-256");
 		this.left = left;
 		this.right = right;
 		digest.update(NODE);
-		if (left !=null) {
+		if (left != null) {
 			digest.update(left.getValue());
 			start = left.beginIndex();
 			level = left.getLevel() + 1;
-			if (right==null) {
+			if (right == null) {
 				end = start;
 			}
 		}
-		if (right !=null) {
+		if (right != null) {
 			digest.update(right.getValue());
 			end = right.endIndex();
 			level = right.getLevel() + 1;
-			if (left==null) {
+			if (left == null) {
 				start = end;
 			}
 		}
 		value = digest.digest();
 		encodedValue = Base64.getEncoder().encodeToString(value);
 	}
-	
-	public MerkleTree(File file) throws NoSuchAlgorithmException {
-        BufferedReader br;
-        List<MerkleTree> merkleTrees = new ArrayList<MerkleTree>();
-        List<MerkleTree> newMerkleTrees;
-        MerkleTree tree;
-        int cpt=0;
-        String readLine = "";
 
-        try {
-        	br = new BufferedReader(new FileReader(file));
-            while ((readLine = br.readLine()) != null) {
-                tree = new MerkleTree(readLine);
-                tree.setBegin(cpt);
-                tree.setEnd(cpt);
-                merkleTrees.add(tree);
-                cpt++;
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        do {
-        	newMerkleTrees = new ArrayList<MerkleTree>();
-	        for (int i = 0; i<merkleTrees.size(); i+=2) {
-	        	if (merkleTrees.size()-1 == i) {
-	        		newMerkleTrees.add(new MerkleTree(merkleTrees.get(i), null));
-	        	}
-	        	else {
-	        		newMerkleTrees.add(new MerkleTree(merkleTrees.get(i), merkleTrees.get(i+1)));
-	        	}
-	        }
-	        //System.out.println("Merkle Tree "+ (nbLevel++) +"\n" + newMerkleTrees);
-	        merkleTrees = newMerkleTrees;
-        } while(merkleTrees!=null && merkleTrees.size()>2);
-        addNodes(newMerkleTrees.get(0), newMerkleTrees.get(1));
-    }
-	
+	public MerkleTree(File file) throws NoSuchAlgorithmException {
+		BufferedReader br;
+		List<MerkleTree> merkleTrees = new ArrayList<MerkleTree>();
+		List<MerkleTree> newMerkleTrees;
+		MerkleTree tree;
+		int cpt = 0;
+		String readLine = "";
+
+		try {
+			br = new BufferedReader(new FileReader(file));
+			while ((readLine = br.readLine()) != null) {
+				tree = new MerkleTree(readLine);
+				tree.setBegin(cpt);
+				tree.setEnd(cpt);
+				merkleTrees.add(tree);
+				cpt++;
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		do {
+			newMerkleTrees = new ArrayList<MerkleTree>();
+			for (int i = 0; i < merkleTrees.size(); i += 2) {
+				if (merkleTrees.size() - 1 == i) {
+					newMerkleTrees.add(new MerkleTree(merkleTrees.get(i), null));
+				} else {
+					newMerkleTrees.add(new MerkleTree(merkleTrees.get(i), merkleTrees.get(i + 1)));
+				}
+			}
+			merkleTrees = newMerkleTrees;
+		} while (merkleTrees != null && merkleTrees.size() > 2);
+		addNodes(merkleTrees.get(0), merkleTrees.get(1));
+	}
+
 	public MerkleTree left() {
 		return left;
 	}
-	
+
 	public MerkleTree right() {
 		return right;
 	}
-	
+
 	public byte[] getValue() {
 		return value;
 	}
-	
+
 	public int beginIndex() {
 		return start;
 	}
-	
+
 	public void setBegin(int begin) {
 		start = begin;
 	}
-	
+
 	public int endIndex() {
 		return end;
 	}
-	
+
 	public void setEnd(int end) {
 		this.end = end;
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
@@ -134,19 +133,23 @@ public class MerkleTree {
 	public void setEncodedValue(String encodedValue) {
 		this.encodedValue = encodedValue;
 	}
-	
+
+	public String getIndexes() {
+		return "[" + beginIndex() + "-" + endIndex() + "]";
+	}
+
 	public String toString() {
 		String s = "";
-		String line = "[" + beginIndex() + "-" + endIndex()+ "] " + getEncodedValue() + "\n";
+		String line = getIndexes() + " " + getEncodedValue() + "\n";
 		int length = getLevel() + line.length();
-		if (left !=null) {
-			s+= left.toString();
+		s += String.format("%1$" + length + "s", line);
+
+		if (left != null) {
+			s += left.toString();
 		}
-		s+= String.format("%1$" + length + "s", line);
-		if (right !=null) {
-			s+= right.toString();
+		if (right != null) {
+			s += right.toString();
 		}
 		return s;
 	}
-	
 }
