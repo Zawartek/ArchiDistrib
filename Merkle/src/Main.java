@@ -9,17 +9,16 @@ public class Main {
 		try {
 			MerkleTree mt;
 			File file = new File("Modif-DS1-trace.txt");
-			//mt = new MerkleTree(file);
-			//System.out.println("Final Merkle Tree\n" + mt + "\n");
+			mt = new MerkleTree(file);
+			System.out.println("Final Merkle Tree\n" + mt + "\n");
 			
 			LogServer ls = new LogServer(file);
-			//System.out.println(ls.getRootHash());
-			System.out.println(ls.genPath(3));
+			System.out.println(ls.getRootHash());
+			System.out.println(ls.genPath(4));			
+			System.out.println(ls.genProof(6));
 
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

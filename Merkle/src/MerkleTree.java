@@ -26,7 +26,7 @@ public class MerkleTree {
 		digest.update(LEAF);
 		digest.update(val.getBytes());
 		value = digest.digest();
-		level = 0;
+		level = 1;
 		encodedValue = Base64.getEncoder().encodeToString(value);
 	}
 
@@ -64,7 +64,7 @@ public class MerkleTree {
 		List<MerkleTree> merkleTrees = new ArrayList<MerkleTree>();
 		List<MerkleTree> newMerkleTrees;
 		MerkleTree tree;
-		int cpt = 0;
+		int cpt = 1;
 		String readLine = "";
 
 		try {
@@ -84,7 +84,7 @@ public class MerkleTree {
 			newMerkleTrees = new ArrayList<MerkleTree>();
 			for (int i = 0; i < merkleTrees.size(); i += 2) {
 				if (merkleTrees.size() - 1 == i) {
-					newMerkleTrees.add(new MerkleTree(merkleTrees.get(i), null));
+					newMerkleTrees.add(merkleTrees.get(i));
 				} else {
 					newMerkleTrees.add(new MerkleTree(merkleTrees.get(i), merkleTrees.get(i + 1)));
 				}
